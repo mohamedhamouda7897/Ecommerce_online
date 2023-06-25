@@ -1,0 +1,41 @@
+import 'package:e_commerce_online/features/home/presentation/pages/home.dart';
+import 'package:e_commerce_online/features/login/data/data_sources/data_sources.dart';
+import 'package:e_commerce_online/features/login/domain/entities/login_entity.dart';
+import 'package:e_commerce_online/features/login/presentation/manager/cubit.dart';
+import 'package:e_commerce_online/features/sign_up/presentation/pages/sign_up.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../core/utils/components.dart';
+import '../../features/login/presentation/pages/login.dart';
+
+class Routes {
+  static const String login = "/";
+  static const String signUp = "signUp";
+  static const String home = "homeScreen";
+}
+
+class AppRoutes {
+  static Route onGenerate(RouteSettings routeSettings) {
+    switch (routeSettings.name) {
+      case Routes.login:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+              create: (context) => LoginCubit(RemoteDto()),
+              child: const LoginScreen()),
+        );
+      case Routes.signUp:
+        return MaterialPageRoute(
+          builder: (context) => const SignUpScreen(),
+        );
+      case Routes.home:
+        LoginEntity loginEntity = routeSettings.arguments as LoginEntity;
+        return MaterialPageRoute(
+          builder: (context) => HomeScreen(loginEntity),
+        );
+
+      default:
+        return MaterialPageRoute(builder: (context) => unDefineRoute());
+    }
+  }
+}
