@@ -1,4 +1,5 @@
 import 'package:e_commerce_online/core/error/failures.dart';
+import 'package:e_commerce_online/features/home/data/models/CartReponse.dart';
 import 'package:e_commerce_online/features/home/domain/entities/CategoriesEntity.dart';
 
 import '../../domain/entities/ProductEntity.dart';
@@ -46,3 +47,17 @@ class HomeGetCategoriesErrorState extends HomeStates {
 }
 
 class ChangeBottomNavBar extends HomeStates {}
+
+class AddToCartLoadingState extends HomeStates {}
+
+class AddToCartSuccessState extends HomeStates {
+  CartResponse cartResponse;
+
+  AddToCartSuccessState(this.cartResponse);
+}
+
+class AddToCartErrorState extends HomeStates {
+  Failures failures;
+
+  AddToCartErrorState(this.failures);
+}

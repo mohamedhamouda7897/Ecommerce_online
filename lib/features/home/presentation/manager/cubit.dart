@@ -1,10 +1,10 @@
-import 'package:bloc/bloc.dart';
 import 'package:e_commerce_online/core/utils/app_images.dart';
 import 'package:e_commerce_online/features/home/data/data_sources/data_sources.dart';
 import 'package:e_commerce_online/features/home/data/repositories/home_data_repo.dart';
 import 'package:e_commerce_online/features/home/domain/entities/CategoriesEntity.dart';
 import 'package:e_commerce_online/features/home/domain/entities/ProductEntity.dart';
 import 'package:e_commerce_online/features/home/domain/repositories/home_domain_repo.dart';
+import 'package:e_commerce_online/features/home/domain/use_cases/add_cart_use_case.dart';
 import 'package:e_commerce_online/features/home/domain/use_cases/get_brands_use_case.dart';
 import 'package:e_commerce_online/features/home/domain/use_cases/get_categories_use_case.dart';
 import 'package:e_commerce_online/features/home/domain/use_cases/get_products_use_case.dart';
@@ -27,6 +27,7 @@ class HomeCubit extends Cubit<HomeStates> {
   static HomeCubit get(context) => BlocProvider.of(context);
 
   int bottomNavIndex = 0;
+  int numOfItemsInCart = 0;
   List<Widget> tabs = const [HomeTab(), CategoryTab(), FavTab(), ProfileTab()];
 
   List<DataEntity> categories = [];
@@ -43,6 +44,18 @@ class HomeCubit extends Cubit<HomeStates> {
     emit(HomeInitState());
     bottomNavIndex = index;
     emit(ChangeBottomNavBar());
+  }
+
+  void addTCart(String productId) async {
+    emit(AddToCartLoadingState());
+    AddCartUseCase addCartUseCase = AddCartUseCase(homeDomainRepo);
+    var result = await addCartUseCase.call(productId);
+    result.fold((l) {
+      emit(AddToCartErrorState(l));
+    }, (r) {
+      numOfItemsInCart = r.numOfCartItems ?? 0;
+      emit(AddToCartSuccessState(r));
+    });
   }
 
   getProducts() async {

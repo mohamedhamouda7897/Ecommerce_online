@@ -1,4 +1,5 @@
 import 'package:e_commerce_online/features/home/domain/entities/ProductEntity.dart';
+import 'package:e_commerce_online/features/home/presentation/manager/cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -135,7 +136,9 @@ class ProductItem extends StatelessWidget {
             child: Align(
               alignment: Alignment.bottomRight,
               child: InkWell(
-                onTap: () {},
+                onTap: () {
+                  HomeCubit.get(context).addTCart(model.id ?? "");
+                },
                 child: CircleAvatar(
                   radius: 15.r,
                   backgroundColor: const Color(0xff004182),

@@ -18,6 +18,8 @@ dependencies:
   google_fonts: ^5.1.0
   flutter_screenutil: ^5.8.4
   flutter_image_slideshow: ^0.1.6
+  shared_preferences: ^2.2.0
+  internet_connection_checker: ^1.0.0+1
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:e_commerce_online/core/utils/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +23,8 @@ class LoginScreen extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginStates>(listener: (context, state) {
       if (state is LoginSuccessState) {
         Navigator.pop(context);
+        print(json.encode(state.loginEntity.token));
+        CacheHelper.saveData(key: "User", value: state.loginEntity.token);
         Navigator.pushNamedAndRemoveUntil(
             context,
             Routes.home,
@@ -32,8 +37,8 @@ class LoginScreen extends StatelessWidget {
             backgroundColor: Colors.transparent,
             title: Center(
                 child: CircularProgressIndicator(
-              color: AppColors.primary,
-            )),
+                  color: AppColors.primary,
+                )),
           ),
         );
       } else if (state is LoginErrorState) {
@@ -87,7 +92,7 @@ class LoginScreen extends StatelessWidget {
                       label: "Email",
                       validate: (value) {
                         bool emailValid = RegExp(
-                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                             .hasMatch(value!);
                         if (value == null || value.isEmpty || !emailValid) {
                           return "Please Enter valid Email Address";

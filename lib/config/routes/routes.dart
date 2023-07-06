@@ -1,6 +1,6 @@
+import 'package:e_commerce_online/features/cart/presentation/pages/cart_screen.dart';
 import 'package:e_commerce_online/features/home/presentation/pages/home.dart';
 import 'package:e_commerce_online/features/login/data/data_sources/data_sources.dart';
-import 'package:e_commerce_online/features/login/domain/entities/login_entity.dart';
 import 'package:e_commerce_online/features/login/presentation/manager/cubit.dart';
 import 'package:e_commerce_online/features/product_details/presentation/pages/product_details.dart';
 import 'package:e_commerce_online/features/sign_up/presentation/pages/sign_up.dart';
@@ -16,6 +16,7 @@ class Routes {
   static const String signUp = "signUp";
   static const String home = "homeScreen";
   static const String productDetails = "productDetails";
+  static const String cart = "cart";
 }
 
 class AppRoutes {
@@ -32,15 +33,19 @@ class AppRoutes {
           builder: (context) => const SignUpScreen(),
         );
       case Routes.home:
-        // LoginEntity loginEntity = routeSettings.arguments as LoginEntity;
+      // LoginEntity loginEntity = routeSettings.arguments as LoginEntity;
         return MaterialPageRoute(
           builder: (context) => HomeScreen(),
         );
       case Routes.productDetails:
         ProductDataEntity productEntity =
-            routeSettings.arguments as ProductDataEntity;
+        routeSettings.arguments as ProductDataEntity;
         return MaterialPageRoute(
           builder: (context) => ProductDetails(productEntity),
+        );
+      case Routes.cart:
+        return MaterialPageRoute(
+          builder: (context) => CartScreen(),
         );
 
       default:

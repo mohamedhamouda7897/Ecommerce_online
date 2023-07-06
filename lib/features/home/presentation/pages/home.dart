@@ -2,11 +2,11 @@ import 'package:e_commerce_online/core/utils/app_colors.dart';
 import 'package:e_commerce_online/features/home/data/data_sources/data_sources.dart';
 import 'package:e_commerce_online/features/home/presentation/manager/cubit.dart';
 import 'package:e_commerce_online/features/home/presentation/manager/states.dart';
-import 'package:e_commerce_online/features/login/domain/entities/login_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../config/routes/routes.dart';
 import '../../../../core/utils/app_images.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -48,6 +48,25 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Badge(
+                    alignment: Alignment.topCenter,
+                    label: Text(
+                        HomeCubit.get(context).numOfItemsInCart.toString()),
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, Routes.cart);
+                        },
+                        icon: Icon(
+                          Icons.shopping_cart,
+                          size: 30,
+                          color: AppColors.primary,
+                        )),
+                  ),
+                )
+              ],
               title: Image.asset(
                 AppImages.logo,
                 width: 66.w,
