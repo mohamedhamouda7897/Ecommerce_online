@@ -2,17 +2,20 @@ import 'package:e_commerce_online/features/home/presentation/pages/home.dart';
 import 'package:e_commerce_online/features/login/data/data_sources/data_sources.dart';
 import 'package:e_commerce_online/features/login/domain/entities/login_entity.dart';
 import 'package:e_commerce_online/features/login/presentation/manager/cubit.dart';
+import 'package:e_commerce_online/features/product_details/presentation/pages/product_details.dart';
 import 'package:e_commerce_online/features/sign_up/presentation/pages/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/utils/components.dart';
+import '../../features/home/domain/entities/ProductEntity.dart';
 import '../../features/login/presentation/pages/login.dart';
 
 class Routes {
   static const String login = "/";
   static const String signUp = "signUp";
   static const String home = "homeScreen";
+  static const String productDetails = "productDetails";
 }
 
 class AppRoutes {
@@ -29,9 +32,15 @@ class AppRoutes {
           builder: (context) => const SignUpScreen(),
         );
       case Routes.home:
-        LoginEntity loginEntity = routeSettings.arguments as LoginEntity;
+        // LoginEntity loginEntity = routeSettings.arguments as LoginEntity;
         return MaterialPageRoute(
-          builder: (context) => HomeScreen(loginEntity),
+          builder: (context) => HomeScreen(),
+        );
+      case Routes.productDetails:
+        ProductDataEntity productEntity =
+            routeSettings.arguments as ProductDataEntity;
+        return MaterialPageRoute(
+          builder: (context) => ProductDetails(productEntity),
         );
 
       default:
